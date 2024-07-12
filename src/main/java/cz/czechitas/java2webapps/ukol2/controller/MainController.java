@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @Controller
 public class MainController {
 
+
     private static List<String> readAllLines(String resource) throws IOException {
         //Soubory z resources se získávají pomocí classloaderu. Nejprve musíme získat aktuální classloader.
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -39,13 +40,14 @@ public class MainController {
 
         List<String> citaty = readAllLines("citaty.txt");
         List<String> imgLinks = readAllLines("imgLinks.txt");
+        int citatySize = citaty.size();
+        int imgLinksSize = imgLinks.size();
+        String citat = citaty.get(randomNum.nextInt(1, citatySize));
+        String imgLink = imgLinks.get(randomNum.nextInt(1, imgLinksSize));
 
-        String citat = citaty.get(randomNum.nextInt(1, 8));
-        String imgLink = imgLinks.get(randomNum.nextInt(1,7));
-
-        ModelAndView result = new ModelAndView("citaty");
-        result.addObject("citat", citat);
-        result.addObject("imgLink", imgLink);
+        ModelAndView result = new ModelAndView("citaty")
+                .addObject("citat", citat)
+                .addObject("imgLink", imgLink);
         return result;
     }
 }
